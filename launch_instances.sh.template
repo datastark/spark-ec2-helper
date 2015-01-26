@@ -1,0 +1,47 @@
+# This script is to launch a Spark cluster on Amazon Web Services.
+#
+# By default, the latest release of Spark will be deployed.
+#
+# We use spot instances as the default scenarios. However, you can 
+# use on-demand instances by removing --spot-price option.
+#
+# The Ganglia monitoring for the cluster is set up by default. you
+# can disable it by appending --no-ganglia option.
+
+# Your access key can be obtained from the AWS homepage by clicking
+# Account > Security Credentials > Access Credentials, or from
+# whoever added you to their AWS account.
+export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
+export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
+
+# Your key pairs can be created at the AWS EC2 homepage by clicking
+# Key Pairs -> Create Key Pair
+export KEY_PAIR=<KEY_PAIR_NAME>
+export KEY_IDENT_FILE=<FILE_PATH_OF_your_name.pem>
+
+# Default zone: AZ Oregon us-west-2c
+export REGION=us-west-2
+export ZONE=us-west-2c
+
+# Default instance type: m1.large
+# The spot instances pricing history can be viewed at the AWS EC2
+# homepage by clicking Spot Requests -> Pricing History
+export INSTANCE_TYPE="m1.large"
+export SPOT_PRICE=<NAME_A_PRICE>
+
+# Cluster details
+export SLAVES=1
+# The size of the EBS volume attached to each node (unit: GB).
+export HDFS_SIZE=10
+export CLUSTER_NAME="my-spark-cluster"
+
+
+# TODO: ebs-vol-size
+
+ec2/spark-ec2 --key-pair=$KEY_PAIR --identity-file=$KEY_IDENT_FILE --region=$REGION --zone=$ZONE --slaves=$SLAVES --instance-type=$INSTANCE_TYPE --spot-price=$SPOT_PRICE --ebs-vol-size=$HDFS_SIZE launch $CLUSTER_NAME
+
+
+# Launch slave nodes in failure:
+#
+#   ec2/spark-ec2 launch --resume
+#
