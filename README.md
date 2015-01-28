@@ -22,3 +22,6 @@ can be disabled by appending --no-ganglia option.
 	* Shutdown the cluster and deleting everything.
 * login:
 	* Login to the master node of the cluster.
+
+Please refer to http://spark.apache.org/docs/latest/ec2-scripts.html
+for more information on running Spark on EC2.
