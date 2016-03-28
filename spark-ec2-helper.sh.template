@@ -49,9 +49,9 @@ export KEY_IDENT_FILE=<FILE_PATH_OF_your_name.pem>
 # Default instance type: m1.large
 # The spot instances pricing history can be viewed at the AWS EC2
 # homepage by clicking Spot Requests -> Pricing History
-export REGION=us-west-2
-export ZONE=us-west-2b
-export INSTANCE_TYPE="m1.large"
+export REGION=us-east-1
+export ZONE=us-east-1a
+export INSTANCE_TYPE="r3.xlarge"
 export SPOT_PRICE=<NAME_A_PRICE>
 
 # Cluster details
