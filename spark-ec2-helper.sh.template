@@ -36,8 +36,8 @@ fi
 # Your access key can be obtained from the AWS homepage by clicking
 # Account > Security Credentials > Access Credentials, or from
 # whoever added you to their AWS account.
-export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
+export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
 
 # Your key pairs can be created at the AWS EC2 homepage by clicking
 # Key Pairs -> Create Key Pair
