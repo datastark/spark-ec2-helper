@@ -23,10 +23,14 @@
 #   login:
 #       Login to the master node of the cluster.
 
+if [ -z "$SPARK_PATH" ] ; then
+    echo 'Please set $SPARK_PATH variable to the Spark installed path.'
+    exit 1
+fi
 
 if [[ $# -eq 0 ]] ; then
     echo 'Please choose an action among: launch, resume, stop, restart and destroy.'
-    exit 0
+    exit 1
 fi
 
 # Your access key can be obtained from the AWS homepage by clicking
@@ -59,20 +63,20 @@ export CLUSTER_NAME="my-spark-cluster"
 
 if [ $1 = "launch" ]; then
     if [ -z "$SPOT_PRICE" ]; then
-        ec2/spark-ec2 --key-pair=$KEY_PAIR --identity-file=$KEY_IDENT_FILE --region=$REGION --zone=$ZONE --slaves=$SLAVES --instance-type=$INSTANCE_TYPE --ebs-vol-size=$HDFS_SIZE launch $CLUSTER_NAME
+        $SPARK_PATH/ec2/spark-ec2 --key-pair=$KEY_PAIR --identity-file=$KEY_IDENT_FILE --region=$REGION --zone=$ZONE --slaves=$SLAVES --instance-type=$INSTANCE_TYPE --ebs-vol-size=$HDFS_SIZE launch $CLUSTER_NAME
     else
-        ec2/spark-ec2 --key-pair=$KEY_PAIR --identity-file=$KEY_IDENT_FILE --region=$REGION --zone=$ZONE --slaves=$SLAVES --instance-type=$INSTANCE_TYPE --spot-price=$SPOT_PRICE --ebs-vol-size=$HDFS_SIZE launch $CLUSTER_NAME
+        $SPARK_PATH/ec2/spark-ec2 --key-pair=$KEY_PAIR --identity-file=$KEY_IDENT_FILE --region=$REGION --zone=$ZONE --slaves=$SLAVES --instance-type=$INSTANCE_TYPE --spot-price=$SPOT_PRICE --ebs-vol-size=$HDFS_SIZE launch $CLUSTER_NAME
     fi
 elif [ $1 = "resume" ]; then
-    ec2/spark-ec2 --region=$REGION launch --resume $CLUSTER_NAME
+    $SPARK_PATH/ec2/spark-ec2 --region=$REGION launch --resume $CLUSTER_NAME
 elif [ $1 = "stop" ]; then
-    ec2/spark-ec2 --region=$REGION stop $CLUSTER_NAME
+    $SPARK_PATH/ec2/spark-ec2 --region=$REGION stop $CLUSTER_NAME
 elif [ $1 = "restart" ]; then
-    ec2/spark-ec2 -i $KEY_IDENT_FILE --region=$REGION start $CLUSTER_NAME
+    $SPARK_PATH/ec2/spark-ec2 -i $KEY_IDENT_FILE --region=$REGION start $CLUSTER_NAME
 elif [ $1 = "destroy" ]; then
-    ec2/spark-ec2 --region=$REGION destroy $CLUSTER_NAME
+    $SPARK_PATH/ec2/spark-ec2 --region=$REGION destroy $CLUSTER_NAME
 elif [ $1 = "login" ]; then
-    ec2/spark-ec2 -k $KEY_PAIR -i $KEY_IDENT_FILE --region=$REGION login $CLUSTER_NAME
+    $SPARK_PATH/ec2/spark-ec2 -k $KEY_PAIR -i $KEY_IDENT_FILE --region=$REGION login $CLUSTER_NAME
 else
     echo "Cannot recognize the parameter."
 fi
