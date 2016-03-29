@@ -23,6 +23,11 @@
 #   login:
 #       Login to the master node of the cluster.
 
+if ! [[ $(python --version 2>&1) == *2\.7* ]]; then
+    echo "Error: Only support python 2.7."
+    exit 1
+fi
+
 if [ -z "$SPARK_PATH" ] ; then
     echo 'Please set $SPARK_PATH variable to the Spark installed path.'
     exit 1
